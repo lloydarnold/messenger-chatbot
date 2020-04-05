@@ -89,7 +89,7 @@ function handleMessage(sender_psid, received_message) {
 
   // Check if the message contains text
   if (received_message.text) {
-    response = textHandler(received_message.text);
+    response = createTextMessage(textHandler(received_message.text));
     }
 
   // Sends the response message
@@ -97,8 +97,14 @@ function handleMessage(sender_psid, received_message) {
 
 }
 
+// Function handles text based replies
 function textHandler(message_text) {
   return "Hey there"
+}
+
+// Function to format raw text into JSON object that can be sent as text message
+function createTextMessage(message_contents) {
+  return {"text": message_contents}
 }
 
 // Handles messaging_postbacks events
