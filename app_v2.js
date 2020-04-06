@@ -89,6 +89,7 @@ function handleMessage(sender_psid, received_message) {
 
   // Check if the message contains text
   if (received_message.text) {
+    getUserName(sender_psid)
     response = createTextMessage(textHandler(received_message.text));
     }
 
@@ -107,6 +108,18 @@ function createTextMessage(message_contents) {
   return {"text": message_contents}
 }
 
+function getUserName(sender_psid) {
+  /* GET https://graph.facebook.com/v2.6/<USER_ID>?fields=first_name,last_name,profile_pic,
+  locale,timezone,gender&access_token=<PAGE_ACCESS_TOKEN> ; */
+
+  let url = "https://graph.facebook.com/v2.6/" + sender_psid + "?fields=first_name&access_token="
+            + PAGE_ACCESS_TOKEN;
+
+  console.log(request.get(url));
+
+}
+
+
 // Handles messaging_postbacks events
 function handlePostback(sender_psid, received_postback) {
   let response;
@@ -123,7 +136,6 @@ function handlePostback(sender_psid, received_postback) {
   // Send the message to acknowledge the postback
   callSendAPI(sender_psid, response);
 }
-
 
 // Sends response messages via the Send API
 function callSendAPI(sender_psid, response) {
